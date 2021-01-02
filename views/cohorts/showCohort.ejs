@@ -33,15 +33,19 @@
     <hr>
 
     
-    <form action="" method="GET" id="form-id">
+    <form action="" method="GET" id="form-id" >
       <div>
         <h5><label for="method" class="card-title">Method</label></h5> 
-
-        <input class="card-text" type="radio" id="method" name="choice" name="team_count" value="team_count" required>&nbsp;Team Count
+        <%if(choice == 'team_count'){%>
+        <input class="card-text" type="radio" id="method" name="choice"  checked value="team_count" required>&nbsp;Team Count
+         <%}else{%>
+          <input class="card-text" type="radio" id="method" name="choice"  value="team_count" required>&nbsp;Team Count
+          
+         <%}%>
 
         <br>
 
-        <input class="card-text"type="radio" id="choice" name="choice" name="number_per_team" value="number_per_team" required>&nbsp;Number Per Team
+        <input class="card-text"type="radio" id="choice" name="choice"  value="number_per_team" required>&nbsp;Number Per Team
       </div>
 
       <br>
@@ -49,19 +53,23 @@
       <div class='form-group'>
         <label for="quantity">Quantity</label>
         <input
+        id="quantity-id"
           type='number'
           class='form-control'
+          value="<%= quantity %>"
           name='quantity' required>
       </div>      
         <div class="form-group">
           <input type="submit"class="btn btn-outline-primary btn-lg btn-block" value="Assign Teams">
         </div>
+
+        
     </form>
   
 
     <%if(choice && quantity){%>
      <% let numbers = cohort.members.split(',')%>
-     <%=numbers.length%>
+     
      <%if((choice === 'team_count') && (numbers.length < quantity)){%>
         <div class="alert alert-danger" role="alert">
           Number of teams must be between 1 and the number of member

@@ -43,7 +43,7 @@ router.get('/:id',(req,res)=>{
   .first()
   .then(cohort=>{
     // const c = cohort[0]
-    let details = team(req.query.choice,cohort.members,req.query.quantity)
+    let details = team(req.query.choice,cohort.members,quantity)
       res.render(`cohorts/showCohort`,{details:details,cohort:cohort,id:req.params.id,choice:choice,quantity:quantity})
     
   })
@@ -66,6 +66,7 @@ function shuffle(array) {
 const team=(choice,members,quantity)=>{
   members=shuffle(members.split(','))
   console.log(members)
+  // console.log(choice)
   let div = members.length/quantity 
   let rem=members.length%quantity
   let outArr=[];
@@ -78,13 +79,16 @@ const team=(choice,members,quantity)=>{
       case 'number_per_team':
           let last;
           if(rem<=2&&rem>0){
-              let ind=members.length-rem
-              last=members.splice(ind,rem)
-              for(let i=0; i<members.length; i+=quantity){
+            let ind=members.length-rem
+            last=members.splice(ind,rem)
+            console.log(last)
+            for(var i=0; i<members.length; i+=quantity){
+              
                   outArr.push(members.slice(i,quantity+i))
               }
+            
               for(let j=0; j<last.length; j++){
-                  outArr[j].push(last[j])
+                  outArr.push(last[j])
               }
           }
           else if(rem>2){
@@ -100,6 +104,7 @@ const team=(choice,members,quantity)=>{
               }     
           }
   }
+  
   return outArr
 }
 router.get('/:id/edit',(req,res)=>{
