@@ -10,7 +10,7 @@ const logger = require('morgan');
 
 app.set('view engine', 'ejs');
 
-app.use(methodOverride((req, res) => {
+app.use(methodOveride((req, res) => {
   if (req.body && req.body._method) {
     const method = req.body._method;
     return method;
