@@ -45,7 +45,12 @@
 
         <br>
 
-        <input class="card-text"type="radio" id="choice" name="choice"  value="number_per_team" required>&nbsp;Number Per Team
+        <%if(choice == 'number_per_team'){%>
+        <input class="card-text"type="radio" id="choice" name="choice" checked value="number_per_team" required>&nbsp;Number Per Team
+
+        <%}else{%>
+          <input class="card-text"type="radio" id="choice" name="choice"  value="number_per_team" required>&nbsp;Number Per Team
+          <%}%>
       </div>
 
       <br>

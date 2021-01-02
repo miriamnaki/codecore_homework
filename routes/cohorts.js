@@ -20,21 +20,6 @@ router.get('/pickerOptions',(req,res)=>{
   res.render('cohorts/pickerOptions')
 })
 
-// router.get('/:id',(req,res)=>{
-//   let choice = req.query.choice;
-//   let quantity = parseInt(req.query.quantity)
-//   knex('cohorts')
-//   .where('id',req.params.id)
-//   .first()
-//   .then(cohort=>{ 
-//     // const c = cohort[0]
-//     res.render('cohorts/showCohort',{cohort:cohort,details:undefined,choice:choice,quantity:quantity})
-//   })
-
-// })
-
-
-
 router.get('/:id',(req,res)=>{
   let choice = req.query.choice;
   let quantity = parseInt(req.query.quantity)
@@ -42,8 +27,8 @@ router.get('/:id',(req,res)=>{
   .where('id',req.params.id)
   .first()
   .then(cohort=>{
-    // const c = cohort[0]
-    let details = team(req.query.choice,cohort.members,quantity)
+   
+    let details = group(req.query.choice,cohort.members,quantity)
       res.render(`cohorts/showCohort`,{details:details,cohort:cohort,id:req.params.id,choice:choice,quantity:quantity})
     
   })
@@ -63,10 +48,10 @@ function shuffle(array) {
   }
   return array
 }
-const team=(choice,members,quantity)=>{
+const group=(choice,members,quantity)=>{
   members=shuffle(members.split(','))
   console.log(members)
-  // console.log(choice)
+  
   let div = members.length/quantity 
   let rem=members.length%quantity
   let outArr=[];
@@ -113,7 +98,7 @@ router.get('/:id/edit',(req,res)=>{
   .first()
   .then(cohort=>{
     if(!cohort){
-      res.send('No post found')
+      res.send('No cohort found')
     }
     else{
       res.render('cohorts/edit',{cohort:cohort})
@@ -151,19 +136,6 @@ router.patch('/:id',(req,res)=>{
   })
   .then(()=>{
     res.redirect(`/cohorts/${req.params.id}`)
-  })
-})
-router.get('/:id/delete',(req,res)=>{
-  knex('cohorts')
-  .where('id',req.params.id)
-  .first()
-  .then(cohort=>{
-    if(!cohort){
-      res.send('No post found')
-    }
-    else{
-      res.render('cohorts/delete',{cohort:cohort})
-    }
   })
 })
 
