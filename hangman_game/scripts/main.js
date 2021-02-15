@@ -25,7 +25,42 @@ $(document).ready(()=>{
       }
       $('.new-word').replaceWith(
         `<div class='new-word'><h1>${guessedWord.join(' ')}</h1></div>`
-      )
+      );
     }
+
+    function loadBodyParts(){
+      switch(numError){
+        case 0:
+          document.querySelector('#body-image').src = `./assets/images/gallows.jpg`;
+        break;
+
+        case 1:
+          document.querySelector('#body-image').src = `./assets/images/gallows+head.jpg`;
+        break;
+
+        case 2:
+           document.querySelector('#body-image').src = `./assets/images/gallows+head+torso.jpg`;
+        break;
+
+        case 3:
+          document.querySelector('#body-image').src = `./assets/images/galllows+head+torso+arm.jpg`;
+        break;
+
+        case 4:
+          document.querySelector('#body-image').src = `./assets/images/gallows+head+torso+2leg`;
+        break;
+
+        case 5:
+          document.querySelector('#body-image').src = `./assets/images/gallows+head+torso+2leg+arm`;
+        break;
+
+        case 6:
+          document.querySelector('#body-image').src = `./assets/images/gallows+head+torso+2leg+2arm`;
+        break;
+        default:
+      }
+    }
+
+    
 
 })
