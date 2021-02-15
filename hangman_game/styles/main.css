@@ -24,9 +24,12 @@ border-color: black;
 .third-row {
   margin-bottom: 15px;
 }
-.main-image{
+.body-image{
   text-align: center;
 }
 .highlight {
   background-color: orange;
+}
+.new-word {
+  text-align: center;
 }

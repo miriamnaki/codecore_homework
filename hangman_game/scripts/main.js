@@ -10,22 +10,32 @@ $(document).ready(()=>{
     'bleed',
     'honest',
     'approve']
-
-    let wordToBeGuessed = [];
-    let guessedWord = [];
     let numError = 0;
+    console.log(words)
 
+    let wordToBeGuessed = []; //guessArry
+    let guessedWord = [];//finalArray
+    
+    //selected word
     let chosenWord = words[Math.floor(Math.random() * words.length)];
   
     let word = chosenWord.split('');
 
     function choseWord(){
+      wordToBeGuessed = [];
+      guessedWord = [];
+      numError = 0;
+      chosenWord = words[Math.floor(Math.random() * words.length)];  
+      word = chosenWord.split('')
+
       for(let i = 0;i < word.length;i++){
-        guessedWord.push('__')
+        guessedWord.push("_")//finalArray
       }
       $('.new-word').replaceWith(
-        `<div class='new-word'><h1>${wordToBeGuessed.join(' ')}</h1></div>`
+        `<div class='new-word'><h1>${guessedWord.join(' ')}</h1></div>`
       );
+      $(".key").removeClass('highlight');
+      loadBodyParts()
     }
 
     function loadBodyParts(){
@@ -43,23 +53,25 @@ $(document).ready(()=>{
         break;
 
         case 3:
-          document.querySelector('#body-image').src = `./assets/images/galllows+head+torso+arm.jpg`;
+          document.querySelector('#body-image').src = `./assets/images/gallows+head+torso+arm.jpg`;
         break;
 
         case 4:
-          document.querySelector('#body-image').src = `./assets/images/gallows+head+torso+2leg`;
+          document.querySelector('#body-image').src = `./assets/images/gallows+head+torso+2leg.jpg`;
         break;
 
         case 5:
-          document.querySelector('#body-image').src = `./assets/images/gallows+head+torso+2leg+arm`;
+          document.querySelector('#body-image').src = `./assets/images/gallows+head+torso+2leg+arm.jpg`;
         break;
 
         case 6:
-          document.querySelector('#body-image').src = `./assets/images/gallows+head+torso+2leg+2arm`;
+          document.querySelector('#body-image').src = `./assets/images/gallows+head+torso+2leg+2arm.jpg`;
         break;
         default:
       }
     }
+
+    choseWord()
 
     function checkWord(){
       for(let x = 0; x< word.length; x++){
@@ -69,6 +81,10 @@ $(document).ready(()=>{
           }
         }
       }
+      $(".new-word").replaceWith(
+        `<div class="new-word"><h1>${guessedWord.join(" ")}</h1></div>`
+      );
+    
     }
 
     let failureSound = new Audio('./assets/sounds/failure.wav');
@@ -77,51 +93,72 @@ $(document).ready(()=>{
     function playGame(letter){
       if(numError > 5){
         failureSound.play();
-        if(comfirm('You lost! Do you want to play again?')){
-          choseWord()
-          return;
-        }
-        else if(word.join('') == wordToBeGuessed.join('')){
-          if(confirm('You win! Do you wanna play again?')){
+
+        setTimeout(function(){
+          if(comfirm('You lost! Do you want to play again?')){
             choseWord()
-            return;
           }
+          else{
+          }
+        },300);
+        return;
+      }
+
+      else if(word.join('') == guessedWord.join('')){
+        setTimeout(function(){
+          if(confirm('You win! Do you wanna play again?')){
+            choseWord();
+          }
+          else{
+          }
+        },300)
+        return;
+      }
+
+      else {
+        if(wordToBeGuessed.includes(letter)){
+          return; 
         }
-        else{
-          if(wordToBeGuessed.includes(letter)){
-            return; 
-          }
-          wordToBeGuessed.push(letter)
+        wordToBeGuessed.push(letter)
           if(word.includes(letter)){
             checkWord()
           }
-          else{
+          else {
             numError++
           }
           loadBodyParts()
-        }
+        
 
-        if(word.join('') == guessedWord('')){
-          victorySound.play()
+        if(word.join('') == guessedWord.join('')){
+          setTimeout(function(){
+            victorySound.play()
+            if(comfirm('You win!')){
+              chosenWord();
+            }
+            else{
+            }
+          },300)
           return;
         }
 
         if(numError > 5){
           failureSound.play()
-          choseWord()
+          setTimeout(function(){
+            if(comfirm('You experienced a painful death!You wanna play again')){
+              choseWord()
+            }
+            else{    
+            }
+          },300)
+          return;      
         }
-        else{
-          return;
-        }
-
       }
-
     }
     $(".key").on("click", function(event) {
       $(this).addClass("highlight");
       let char = event.target.innerHTML.toLocaleLowerCase();
       playGame(char)
-    })
+    });
 
     document.addEventListener("keydown", event => {
       const { key } = event;
