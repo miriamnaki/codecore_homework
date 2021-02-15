@@ -27,3 +27,6 @@ border-color: black;
 .main-image{
   text-align: center;
 }
+.highlight {
+  background-color: orange;
+}
