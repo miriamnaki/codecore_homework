@@ -1,0 +1,22 @@
+.heading{
+  text-align: center;
+}
+.keyboard{
+  text-align: center;
+}
+.key{
+padding: 2px;
+border-radius: 5px;
+border: solid;
+border-color: black;
+
+}
+.first-row {
+  margin-bottom: 15px;
+}
+.second-row {
+  margin-bottom: 15px;
+}
+.third-row {
+  margin-bottom: 15px;
+}
