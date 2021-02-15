@@ -16,9 +16,9 @@ $(document).ready(()=>{
     let numError = 0;
 
     let chosenWord = words[Math.floor(Math.random() * words.length)];
-
-    
+  
     let word = chosenWord.split('');
+
     function choseWord(){
       for(let i = 0;i < word.length;i++){
         guessedWord.push('__')
@@ -61,6 +61,14 @@ $(document).ready(()=>{
       }
     }
 
-    
+    function checkWord(){
+      for(let x = 0; x< word.length; x++){
+        for(let y = 0; y < guessedWord; y++){
+          if(word[x] == guessedWord[y]){
+            wordToBeGuessed[x] == word[x]
+          }
+        }
+      }
+    }
 
 })
