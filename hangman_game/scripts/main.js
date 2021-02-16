@@ -13,26 +13,29 @@ $(document).ready(()=>{
     let numError = 0;
     console.log(words)
 
-    let wordToBeGuessed = []; //guessArry
-    let guessedWord = [];//finalArray
+    let wordToBeGuessed = []; 
+    let guessedWord = [];
     
     //selected word
     let chosenWord = words[Math.floor(Math.random() * words.length)];
   
-    let word = chosenWord.split('');
+    let word = chosenWord.split("");
+    
 
     function choseWord(){
-      wordToBeGuessed = [];
-      guessedWord = [];
-      numError = 0;
-      chosenWord = words[Math.floor(Math.random() * words.length)];  
-      word = chosenWord.split('')
-
-      for(let i = 0;i < word.length;i++){
-        guessedWord.push("_")//finalArray
+         numError = 0;
+         wordToBeGuessed = []; 
+         guessedWord = [];
+         chosenWord = words[Math.floor(Math.random() * words.length)];
+  
+         word = chosenWord.split('');
+         
+         for(let i = 0;i < word.length;i++){
+        guessedWord.push("__");
+         
       }
       $('.new-word').replaceWith(
-        `<div class='new-word'><h1>${guessedWord.join(' ')}</h1></div>`
+        `<div class='new-word'><h1>${guessedWord.join(" ")}</h1></div>`
       );
       $(".key").removeClass('highlight');
       loadBodyParts()
@@ -71,13 +74,13 @@ $(document).ready(()=>{
       }
     }
 
-    choseWord()
+    choseWord();
 
     function checkWord(){
       for(let x = 0; x< word.length; x++){
-        for(let y = 0; y < wordToBeGuessed; y++){
+        for(let y = 0; y < wordToBeGuessed.length; y++){
           if(word[x] == wordToBeGuessed[y]){
-            guessedWord[x] == word[x]
+            guessedWord[x] = word[x]
           }
         }
       }
@@ -92,10 +95,11 @@ $(document).ready(()=>{
 
     function playGame(letter){
       if(numError > 5){
+        
         failureSound.play();
 
         setTimeout(function(){
-          if(comfirm('You lost! Do you want to play again?')){
+          if(confirm('You lost! Do you want to play again?')){
             choseWord()
           }
           else{
@@ -111,7 +115,7 @@ $(document).ready(()=>{
           }
           else{
           }
-        },300)
+        },300);
         return;
       }
 
@@ -130,10 +134,10 @@ $(document).ready(()=>{
         
 
         if(word.join('') == guessedWord.join('')){
+          victorySound.play()
           setTimeout(function(){
-            victorySound.play()
-            if(comfirm('You win!')){
-              chosenWord();
+            if(confirm('You win!')){
+              choseWord();
             }
             else{
             }
@@ -143,12 +147,24 @@ $(document).ready(()=>{
 
         if(numError > 5){
           failureSound.play()
+
+          $('.error-message').replaceWith(
+            `<div class='error-message'><h4>Sorry! You have been hanged.The answer was</h4></div>`  
+          );
+          $('.guessed-word').replaceWith(
+             `<div class='guessed-word'><h2>${chosenWord}</h2></div>`
+          );
+          
           setTimeout(function(){
-            if(comfirm('You experienced a painful death!You wanna play again')){
+            
+            if(confirm('You experienced a painful death!You wanna play again')){
               choseWord()
+              $('.error-message').hide()
+              $('.guessed-word').hide()
             }
             else{    
             }
+            
           },300)
           return;      
         }
@@ -162,7 +178,6 @@ $(document).ready(()=>{
 
     document.addEventListener("keydown", event => {
       const { key } = event;
-      console.log("key:", key);
       capitalKey = key.toUpperCase();
       $(`span:contains(${capitalKey})`).addClass("highlight");
       playGame(key);

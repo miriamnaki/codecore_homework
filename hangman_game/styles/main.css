@@ -33,3 +33,11 @@ border-color: black;
 .new-word {
   text-align: center;
 }
+.error-message{
+  text-align: center;
+  color:red;
+}
+.guessed-word{
+  text-align: center;
+  color:blue;
+}
