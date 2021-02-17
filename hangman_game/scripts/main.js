@@ -11,12 +11,12 @@ $(document).ready(()=>{
     'honest',
     'approve']
     let numError = 0;
-    console.log(words)
+    
 
     let wordToBeGuessed = []; 
     let guessedWord = [];
     
-    //selected word
+    
     let chosenWord = words[Math.floor(Math.random() * words.length)];
   
     let word = chosenWord.split("");
